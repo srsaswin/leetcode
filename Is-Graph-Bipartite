@@ -1,0 +1,26 @@
+class Solution {
+    public static int[][] adj;
+    public static int[] isV;
+
+    public static boolean isOk(int node,int col){
+        
+        if(isV[node] != 0) return isV[node] == col;
+        isV[node] = col;
+        if(col == 1) col = 2;
+        else col = 1;
+        for(int n:adj[node]){
+            if(!(isOk(n,col))) return false;
+        }
+        return true;
+    }
+
+    public boolean isBipartite(int[][] graph) {
+        int n = graph.length;
+        adj = graph;
+        isV = new int[n];
+        for(int x = 0;x<n;x++){
+            if(isV[x] == 0) if(!(isOk(x,1))) return false;
+        }
+        return true;
+    }
+}
